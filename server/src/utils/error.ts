@@ -1,7 +1,6 @@
 import fs from "fs";
 import { Request, Response, NextFunction } from "express";
-
-const errorLogStream = fs.createWriteStream("error.log", { flags: "a" });
+import errorLogStream from "./log_file_setup";
 
 class AppError extends Error {
   public statusCode: number;

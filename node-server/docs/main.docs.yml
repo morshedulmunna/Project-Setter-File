@@ -1,0 +1,116 @@
+openapi: 3.0.0
+info:
+  title: API with Authentication
+  description: This API requires authentication using a Bearer Token.
+  version: 1.0.0
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "User Register Successfully"
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcml5YTJAZ21haTQuY29tIiwiaWF0IjoxNzQxNjI5ODQ2LCJleHAiOjE3NDIyMzQ2NDZ9.gav2nsGVr7IuUD8-jAbosvG9iG9NcC9Km9zXl5XW3oI"
+            user:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: "Mariya"
+                last_name:
+                  type: string
+                  example: "Munna"
+                email:
+                  type: string
+                  format: email
+                  example: "mariya2@gmai4.com"
+                password:
+                  type: string
+                  example: "12344erfdf"
+                _id:
+                  type: string
+                  example: "67cf29954b8e8d2106e66b87"
+                createdAt:
+                  type: string
+                  format: date-time
+                  example: "2025-03-10T18:04:05.969Z"
+                updatedAt:
+                  type: string
+                  format: date-time
+                  example: "2025-03-10T18:04:05.969Z"
+                __v:
+                  type: integer
+                  example: 0
+        statusCode:
+          type: integer
+          example: 201
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        errorMessages:
+          type: array
+          items:
+            type: string
+          example: []
+        message:
+          type: string
+          example: "User already exists"
+        statusCode:
+          type: integer
+          example: 400
+
+paths:
+  /register:
+    post:
+      summary: User registration
+      description: Registers a new user and returns an authentication token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

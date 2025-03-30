@@ -1,11 +1,12 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
+import { UUID } from 'crypto'
 
 @Entity('auth')
 export class Auth {
     @ApiProperty({ description: 'The unique identifier for the auth record' })
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryGeneratedColumn('uuid')
+    id: UUID
 
     @ApiProperty({ description: 'The unique email address of the user' })
     @Column({ unique: true })
@@ -21,13 +22,6 @@ export class Auth {
     })
     @Column({ default: false })
     isVerified: boolean
-
-    @ApiProperty({
-        description: 'Token used for email verification',
-        nullable: true,
-    })
-    @Column({ nullable: true })
-    verificationToken: string
 
     @ApiProperty({ description: 'Token used for password reset', nullable: true })
     @Column({ nullable: true })

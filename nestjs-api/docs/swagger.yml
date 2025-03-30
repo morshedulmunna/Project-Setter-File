@@ -1,15 +1,23 @@
 openapi: 3.0.0
 paths:
-  /v1.0.0/api:
+  /api:
     get:
-      operationId: AppController_getWelcome
+      operationId: AppController_getHello
       parameters: []
       responses:
         '200':
           description: ''
       tags: &ref_0
-        - App
-  /v1.0.0/api/health:
+        - Root
+  /api/favicon.ico:
+    get:
+      operationId: AppController_getFavicon
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_0
+  /api/health:
     get:
       operationId: AppController_checkHealth
       parameters: []
@@ -17,9 +25,9 @@ paths:
         '200':
           description: ''
       tags: *ref_0
-  /v1.0.0/api/auth/register:
+  /api/v1/auth/register:
     post:
-      operationId: AuthController_register
+      operationId: AuthController_register_v1
       parameters: []
       requestBody:
         required: true
@@ -51,9 +59,9 @@ paths:
       summary: Register a new user
       tags: &ref_1
         - Authentication
-  /v1.0.0/api/auth/login:
+  /api/v1/auth/login:
     post:
-      operationId: AuthController_login
+      operationId: AuthController_login_v1
       parameters: []
       requestBody:
         required: true
@@ -79,9 +87,9 @@ paths:
           description: Unauthorized
       summary: Login user
       tags: *ref_1
-  /v1.0.0/api/auth/forgot-password:
+  /api/v1/auth/forgot-password:
     post:
-      operationId: AuthController_forgotPassword
+      operationId: AuthController_forgotPassword_v1
       parameters: []
       requestBody:
         required: true
@@ -103,9 +111,9 @@ paths:
           description: User not found
       summary: Request password reset
       tags: *ref_1
-  /v1.0.0/api/auth/reset-password:
+  /api/v1/auth/reset-password:
     post:
-      operationId: AuthController_resetPassword
+      operationId: AuthController_resetPassword_v1
       parameters: []
       requestBody:
         required: true
@@ -131,9 +139,9 @@ paths:
           description: Invalid or expired token
       summary: Reset password with token
       tags: *ref_1
-  /v1.0.0/api/auth/verify:
+  /api/v1/auth/verify:
     get:
-      operationId: AuthController_verifyEmail
+      operationId: AuthController_verifyEmail_v1
       parameters:
         - name: token
           required: true
@@ -172,7 +180,7 @@ components:
       type: object
       properties:
         id:
-          type: number
+          type: string
           description: The unique identifier for the auth record
         email:
           type: string
@@ -184,10 +192,6 @@ components:
           type: boolean
           description: Whether the user email is verified
           default: false
-        verificationToken:
-          type: string
-          description: Token used for email verification
-          nullable: true
         resetPasswordToken:
           type: string
           description: Token used for password reset
@@ -210,7 +214,6 @@ components:
         - email
         - password
         - isVerified
-        - verificationToken
         - resetPasswordToken
         - resetPasswordExpires
         - createdAt

@@ -1,13 +1,15 @@
-import { Auth } from '../../auth.entity'
+import { ApiResponse } from 'src/core/utils/response.util'
+import { ForgotPasswordDto, LoginDto, RegisterDto, ResetPasswordDto } from '../../auth.dto'
+import { Auth } from '../repositories/postgresql/postgres.entity'
 
 export interface IAuthService {
-    register(email: string, password: string): Promise<Auth>
+    register(registerDto: RegisterDto): Promise<ApiResponse<Auth>>
 
-    login(email: string, password: string): Promise<{ token: string }>
+    login(loginDto: LoginDto): Promise<{ token: string }>
 
-    forgotPassword(email: string): Promise<void>
+    forgotPassword(forgotPasswordDto: ForgotPasswordDto): Promise<void>
 
-    resetPassword(token: string, newPassword: string): Promise<void>
+    resetPassword(resetPasswordDto: ResetPasswordDto): Promise<void>
 
-    verifyEmail(token: string): Promise<void>
+    verifyEmail(verifyEmailDto: { token: string }): Promise<void>
 }

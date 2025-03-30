@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
-import { AppConfig, PostgresDatabaseConfig, JwtConfig, SwaggerConfig } from './configuration.interface'
+import { PostgresDatabaseConfig, JwtConfig, SwaggerConfig } from './configuration.interface'
 
 @Injectable()
 export class ConfigurationService {
@@ -17,6 +17,10 @@ export class ConfigurationService {
 
     get apiPrefix(): string {
         return this.configService.get<string>('API_PREFIX', 'api')
+    }
+
+    get mongoUri(): string | undefined {
+        return this.configService.get<string>('MONGODB_URI')
     }
 
     get database(): PostgresDatabaseConfig {

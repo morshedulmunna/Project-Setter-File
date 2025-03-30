@@ -1,5 +1,5 @@
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger'
-import { Auth } from '../auth.entity'
+import { Auth } from '../application/repositories/postgresql/postgres.entity'
 
 export const RegisterSwagger = () => {
     return function (target: any, key: string | symbol, descriptor: PropertyDescriptor) {

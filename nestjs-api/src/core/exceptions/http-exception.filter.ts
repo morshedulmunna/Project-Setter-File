@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common'
 import { Response, Request } from 'express'
-import { LoggerService } from '../utils/logger.service'
+import { LoggerService } from '../logger/logger.service'
 import { AppException } from './app.exception'
 import { Reflector } from '@nestjs/core'
 
@@ -66,7 +66,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
             path: request.url,
             method: request.method,
             message: errorMessage,
-            error: errorMessage,
             extra: error.extra,
         })
     }

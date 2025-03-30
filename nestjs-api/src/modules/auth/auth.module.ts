@@ -1,13 +1,22 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Auth } from './auth.entity'
+import { Auth } from './application/repositories/postgresql/postgres.entity'
 import { AuthController } from './auth.controller'
 import { AuthService } from './application/services/auth.service'
-import { LoggerService } from 'src/core/utils/logger.service'
-
+import { LoggerService } from 'src/core/logger/logger.service'
+import { ConfigurationService } from 'src/core/config/configuration.service'
+import { MongooseModule } from '@nestjs/mongoose'
+import { AuthSchema } from './application/repositories/mongodb/mongo.schema'
+import { PostgresDatabaseModule } from 'src/core/database/postgres.module'
+import { MongoModule } from 'src/core/database/mongo.module'
+import { AuthMongoRepository } from './application/repositories/mongodb/mongo.repository'
+import { AuthPostgresRepository } from './application/repositories/postgresql/postgres.repository'
 @Module({
-    imports: [TypeOrmModule.forFeature([Auth])],
-    providers: [AuthService, LoggerService],
+    imports: [
+        TypeOrmModule.forFeature([Auth]), // Added TypeOrmModule for Postgres
+        MongooseModule.forFeature([{ name: 'Auth', schema: AuthSchema }]),
+    ],
+    providers: [AuthService, LoggerService, AuthPostgresRepository, AuthMongoRepository, ConfigurationService],
     controllers: [AuthController],
     exports: [AuthService],
 })

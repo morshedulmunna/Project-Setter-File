@@ -6,7 +6,7 @@ import { ConfigurationService } from '../config/configuration.service'
 export interface ApiResponse<T> {
     status: number
     message: string
-    data?: T
+    results?: T
     meta: {
         timestamp: string
         response_time: number
@@ -34,11 +34,11 @@ export class Response {
         return elapsed[0] * 1e6 + elapsed[1] / 1e3 // Convert to microseconds
     }
 
-    static success<T>(data: T, message = 'Success', status = 200): ApiResponse<T> {
+    static success<T>(results: T, message = 'Success', status = 200): ApiResponse<T> {
         return {
             status,
             message,
-            data,
+            results,
             meta: {
                 timestamp: new Date().toISOString(),
                 response_time: this.getResponseTime(),
@@ -47,7 +47,7 @@ export class Response {
     }
 
     static paginate<T>(
-        data: T[],
+        results: T[],
         total: number,
         page: number,
         pageSize: number,
@@ -56,7 +56,7 @@ export class Response {
         return {
             status: 200,
             message,
-            data,
+            results,
             meta: {
                 timestamp: new Date().toISOString(),
                 response_time: this.getResponseTime(),

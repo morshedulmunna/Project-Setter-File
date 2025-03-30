@@ -1,6 +1,5 @@
 import { Controller, Post, Body, HttpException, HttpStatus, Get, Query } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
-import { Auth } from './auth.entity'
 import { AuthService } from './application/services/auth.service'
 import {
     RegisterSwagger,
@@ -10,6 +9,10 @@ import {
     VerifyEmailSwagger,
 } from './swagger/auth.swagger'
 import { API_VERSION } from 'src/core/utils/constant'
+import { ForgotPasswordDto, LoginDto, RegisterDto, ResetPasswordDto } from './auth.dto'
+import { AppException } from 'src/core/exceptions/app.exception'
+import { ApiResponse } from 'src/core/utils/response.util'
+import { Auth } from './application/repositories/postgresql/postgres.entity'
 
 @ApiTags('Authentication')
 @Controller({
@@ -21,45 +24,43 @@ export class AuthController {
 
     @Post('register')
     @RegisterSwagger()
-    async register(@Body() registerDto: { email: string; password: string }): Promise<Auth> {
+    async register(@Body() registerDto: RegisterDto): Promise<ApiResponse<Auth>> {
         try {
-            return await this.authService.register(registerDto.email, registerDto.password)
+            return await this.authService.register(registerDto)
         } catch (error) {
-            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+            throw new AppException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
 
     @Post('login')
     @LoginSwagger()
-    async login(@Body() loginDto: { email: string; password: string }): Promise<{ token: string }> {
+    async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
         try {
-            return await this.authService.login(loginDto.email, loginDto.password)
+            return await this.authService.login(loginDto)
         } catch (error) {
-            throw new HttpException(error.message, HttpStatus.UNAUTHORIZED)
+            throw new AppException(error.message, HttpStatus.UNAUTHORIZED)
         }
     }
 
     @Post('forgot-password')
     @ForgotPasswordSwagger()
-    async forgotPassword(@Body() forgotPasswordDto: { email: string }): Promise<{ message: string }> {
+    async forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto): Promise<{ message: string }> {
         try {
-            await this.authService.forgotPassword(forgotPasswordDto.email)
+            await this.authService.forgotPassword(forgotPasswordDto)
             return { message: 'Reset password instructions sent to email' }
         } catch (error) {
-            throw new HttpException(error.message, HttpStatus.NOT_FOUND)
+            throw new AppException(error.message, HttpStatus.NOT_FOUND)
         }
     }
 
     @Post('reset-password')
     @ResetPasswordSwagger()
-    async resetPassword(
-        @Body() resetPasswordDto: { token: string; newPassword: string },
-    ): Promise<{ message: string }> {
+    async resetPassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<{ message: string }> {
         try {
-            await this.authService.resetPassword(resetPasswordDto.token, resetPasswordDto.newPassword)
+            await this.authService.resetPassword(resetPasswordDto)
             return { message: 'Password successfully reset' }
         } catch (error) {
-            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+            throw new AppException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
 
@@ -67,10 +68,10 @@ export class AuthController {
     @VerifyEmailSwagger()
     async verifyEmail(@Query('token') token: string): Promise<{ message: string }> {
         try {
-            await this.authService.verifyEmail(token)
+            await this.authService.verifyEmail({ token })
             return { message: 'Email successfully verified' }
         } catch (error) {
-            throw new HttpException(error.message, HttpStatus.BAD_REQUEST)
+            throw new AppException(error.message, HttpStatus.BAD_REQUEST)
         }
     }
 }

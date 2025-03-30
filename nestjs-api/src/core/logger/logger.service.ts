@@ -8,7 +8,7 @@ export class LoggerService implements NestLoggerService {
 
     constructor() {
         this.logger = winston.createLogger({
-            level: process.env.LOG_LEVEL || 'info',
+            level: process.env.LOG_LEVEL || 'debug', // Ensure it logs all levels
             format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
             transports: [
                 new winston.transports.DailyRotateFile({
@@ -19,10 +19,13 @@ export class LoggerService implements NestLoggerService {
                     maxFiles: '14d',
                 }),
                 new winston.transports.Console({
+                    level: 'debug',
                     format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
                 }),
             ],
         })
+
+        // this.logger.info('LoggerService initialized')
     }
 
     log(message: string, context?: unknown) {

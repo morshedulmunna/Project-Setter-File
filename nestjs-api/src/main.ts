@@ -3,7 +3,6 @@ import { ValidationPipe, VersioningType } from '@nestjs/common'
 import { AppModule } from './app.module'
 import { ConfigurationService } from './core/config/configuration.service'
 import { setupSwagger } from './core/config/swagger.config'
-import { API_VERSION } from './core/utils/constant'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
@@ -16,8 +15,13 @@ async function bootstrap() {
         credentials: true,
     })
 
+    // Enable versioning
+    app.enableVersioning({
+        type: VersioningType.URI,
+    })
+
     // Global prefix
-    app.setGlobalPrefix(`/v${API_VERSION}/${configService.apiPrefix}`)
+    app.setGlobalPrefix(`/${configService.apiPrefix}`)
 
     // Setup Swagger
     setupSwagger(app)
@@ -31,16 +35,10 @@ async function bootstrap() {
         }),
     )
 
-    // // Enable versioning using version from config
-    // app.enableVersioning({
-    //     type: VersioningType.URI,
-    //     defaultVersion: API_VERSION,
-    // })
-
     // Start the application
     const port = configService.port
     await app.listen(port)
-    console.log(`Application  is running on: http://localhost:${port}/v${API_VERSION}/${configService.apiPrefix}`)
+    console.log(`Application  is running on: http://localhost:${port}/${configService.apiPrefix}`)
     console.log(`Swagger is running on: http://localhost:${port}/${configService.apiPrefix}/docs`)
 }
 

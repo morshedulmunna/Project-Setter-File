@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common'
 import { APP_FILTER } from '@nestjs/core'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -9,6 +9,7 @@ import { LoggerService } from './core/logger/logger.service'
 import { AuthModule } from './modules/auth/auth.module'
 import { PostgresDatabaseModule } from './core/database/postgres.module'
 import { MongoModule } from './core/database/mongo.module'
+import { LoggerMiddleware } from './core/middlewares/logger.middleware'
 
 @Module({
     imports: [ConfigurationModule, MongoModule, PostgresDatabaseModule, LoggerModule, AuthModule],
@@ -22,4 +23,8 @@ import { MongoModule } from './core/database/mongo.module'
         },
     ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(LoggerMiddleware).exclude('health', 'metrics').forRoutes('*')
+    }
+}

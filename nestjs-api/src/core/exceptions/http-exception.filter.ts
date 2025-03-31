@@ -2,14 +2,10 @@ import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from
 import { Response, Request } from 'express'
 import { LoggerService } from '../logger/logger.service'
 import { AppException } from './app.exception'
-import { Reflector } from '@nestjs/core'
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-    constructor(
-        private readonly logger: LoggerService,
-        private readonly reflector: Reflector,
-    ) {}
+    constructor(private readonly logger: LoggerService) {}
 
     catch(exception: unknown, host: ArgumentsHost) {
         const ctx = host.switchToHttp()
@@ -34,35 +30,32 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
         // Safely get controller name
 
+        const timestamp = new Date().toISOString()
+
         const logMessage = {
-            timestamp: new Date().toISOString(),
+            timestamp,
             message: errorResponse.error.message || 'Invalid message',
-            service: '',
-            controller: '',
             path: request.url,
             query: request.query,
             method: request.method,
             status,
-            level: 'error',
-            useragent: request.headers['user-agent'],
             ip: request.ip,
             latency,
-            length: request.headers['content-length'],
-            errorStack: error.stack || '',
             errorId: error.errorId,
+            hostname: request.hostname,
+            protocol: request.protocol,
             extra: {
                 body: request.body,
-                errorMessages: JSON.stringify(error.messages || []),
             },
         }
 
-        this.logger.error(`${errorResponse.error.message}`, logMessage, 'ExceptionFilter')
+        this.logger.error(logMessage)
 
         response.status(status).json({
             statusCode: status,
             errorType: errorResponse.errorType,
             errorId: error.errorId,
-            timestamp: new Date().toISOString(),
+            timestamp,
             path: request.url,
             method: request.method,
             message: errorMessage,
@@ -84,7 +77,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
             message = {
                 message: errorResponse.message,
                 errorId: errorResponse.errorId,
-                timestamp: errorResponse.timestamp,
                 extra: errorResponse.extra || {},
                 stack: exception.stack || '',
                 messages: [],
@@ -97,7 +89,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
             message = {
                 message: errorMessage || defaultMessage,
                 errorId,
-                timestamp: new Date().toISOString(),
                 extra: {
                     ...extra,
                     errorMessages: JSON.stringify([errorMessage]),
@@ -108,7 +99,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
             message = {
                 message: exception.message || defaultMessage,
                 errorId,
-                timestamp: new Date().toISOString(),
                 extra,
                 stack: exception.stack || '',
                 messages: [],

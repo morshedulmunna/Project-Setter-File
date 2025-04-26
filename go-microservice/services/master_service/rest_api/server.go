@@ -50,7 +50,7 @@ func (server *Server) Start() {
 		defer server.Wg.Done()
 
 		addr := fmt.Sprintf(":%d", server.cnf.HttpPort)
-		slog.Info(fmt.Sprintf("Listening at %s", addr))
+		slog.Info(fmt.Sprintf("Listening at %s (API %s)", addr, server.cnf.ApiVersion))
 
 		if err := http.ListenAndServe(addr, apmhttp.Wrap(handler)); err != nil {
 			slog.Error(err.Error())

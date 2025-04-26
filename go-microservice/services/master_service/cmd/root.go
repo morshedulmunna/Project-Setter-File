@@ -14,7 +14,7 @@ var RootCmd = &cobra.Command{
 
 func init() {
 	RootCmd.AddCommand(&cobra.Command{
-		Use:   "serve",
+		Use:   "serve-rest",
 		Short: "Serve the REST API",
 		RunE:  serveRest,
 	})

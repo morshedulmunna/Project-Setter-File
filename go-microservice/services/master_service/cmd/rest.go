@@ -19,5 +19,10 @@ func serveRest(cmd *cobra.Command, args []string) error {
 
 	logger.SetupLogger(cnf.ServiceName)
 
+	logger.Info("Starting REST server", "port", cnf.HttpPort)
+	logger.Debug("Debug mode enabled", "service", cnf.ServiceName)
+	logger.Warn("APM configuration", "server", cnf.Apm.ServerURL, "env", cnf.Apm.Environment)
+	logger.Error("Failed to connect to database", "error", "connection timeout")
+
 	return nil
 }

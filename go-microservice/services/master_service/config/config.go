@@ -26,6 +26,7 @@ type Config struct {
 	ServiceName      string `mapstructure:"SERVICE_NAME"             validate:"required"`
 	HttpPort         int    `mapstructure:"HTTP_PORT"                validate:"required"`
 	HealthCheckRoute string `mapstructure:"HEALTH_CHECK_ROUTE"       validate:"required"`
+	ApiVersion       string `mapstructure:"API_VERSION"              validate:"required"`
 	Apm              *Apm
 	Database         db.DBConfig
 	JwtSecret        string `mapstructure:"JWT_SECRET"               validate:"required"`

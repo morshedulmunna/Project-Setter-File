@@ -28,6 +28,7 @@ func loadConfig() error {
 		ServiceName:      viper.GetString("SERVICE_NAME"),
 		HttpPort:         viper.GetInt("HTTP_PORT"),
 		HealthCheckRoute: viper.GetString("HEALTH_CHECK_ROUTE"),
+		ApiVersion:       viper.GetString("API_VERSION"),
 		JwtSecret:        viper.GetString("JWT_SECRET"),
 
 		// UserDatabase: &UserDatabase{

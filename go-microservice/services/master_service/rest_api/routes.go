@@ -9,7 +9,7 @@ import (
 func (server *Server) initRoutes(mux *http.ServeMux, manager *middlewares.Manager) {
 
 	mux.Handle(
-		"GET /payment/api/v1/hello",
+		"GET /master/api/v1/hello",
 		manager.With(
 			http.HandlerFunc(server.handlers.Hello),
 		),

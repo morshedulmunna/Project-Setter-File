@@ -1,4 +1,4 @@
-package db_config
+package db
 
 type DBConfig interface {
 	GetURI() string

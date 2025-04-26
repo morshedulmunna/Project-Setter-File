@@ -6,7 +6,6 @@ import (
 	"log/slog"
 	"os"
 	"path"
-	"time"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -64,7 +63,6 @@ func SetupLogger(serviceName string) {
 		ReplaceAttr: replacer,
 	})).With(
 		string(ServiceKey), serviceName,
-		"timestamp", time.Now().Format(time.RFC3339),
 	)
 
 	slog.SetDefault(logger)

@@ -1,7 +1,7 @@
 package config
 
 import (
-	db_config "master_service/config/db"
+	"master_service/config/db"
 	"sync"
 )
 
@@ -27,7 +27,7 @@ type Config struct {
 	HttpPort         int    `mapstructure:"HTTP_PORT"                validate:"required"`
 	HealthCheckRoute string `mapstructure:"HEALTH_CHECK_ROUTE"       validate:"required"`
 	Apm              *Apm
-	Database         db_config.DBConfig
+	Database         db.DBConfig
 	JwtSecret        string `mapstructure:"JWT_SECRET"               validate:"required"`
 }
 

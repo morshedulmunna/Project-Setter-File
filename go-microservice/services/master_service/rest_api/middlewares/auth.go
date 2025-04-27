@@ -17,11 +17,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			utils.SendJson(w, http.StatusUnauthorized, map[string]any{
 				"success": false,
 				"message": "Missing Authorization header",
-				"error": map[string]string{
-					"code":    "AUTH_001",
-					"message": "Missing Authorization header",
-					"details": "Please provide an Authorization header with a valid Bearer token",
-				},
+				"details": "Please provide an Authorization header with a valid Bearer token",
 			})
 			return
 		}
@@ -32,11 +28,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			utils.SendJson(w, http.StatusUnauthorized, map[string]any{
 				"success": false,
 				"message": "Invalid Authorization header format",
-				"error": map[string]string{
-					"code":    "AUTH_002",
-					"message": "Invalid Authorization header format",
-					"details": "Authorization header must be in the format: 'Bearer <token>'",
-				},
+				"details": "Authorization header must be in the format: 'Bearer <token>'",
 			})
 			return
 		}
@@ -49,11 +41,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			utils.SendJson(w, http.StatusUnauthorized, map[string]any{
 				"success": false,
 				"message": "Invalid token",
-				"error": map[string]string{
-					"code":    "AUTH_003",
-					"message": "Invalid token",
-					"details": "The provided token is empty or invalid",
-				},
+				"details": "The provided token is empty or invalid",
 			})
 			return
 		}

@@ -2,8 +2,8 @@ package utils
 
 import (
 	"encoding/json"
+	"jobs_service/logger"
 	"log/slog"
-	"master_service/logger"
 	"net/http"
 )
 

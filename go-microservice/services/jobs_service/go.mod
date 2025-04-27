@@ -1,4 +1,4 @@
-module master_service
+module jobs_service
 
 go 1.24.2
 

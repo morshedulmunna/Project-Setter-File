@@ -1,6 +1,6 @@
 package main
 
-import "master_service/cmd"
+import "jobs_service/cmd"
 
 func main() {
 	cmd.Execute()

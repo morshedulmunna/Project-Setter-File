@@ -1,9 +1,9 @@
 package middlewares
 
 import (
+	"jobs_service/config"
+	"jobs_service/logger"
 	"log/slog"
-	"master_service/config"
-	"master_service/logger"
 	"net/http"
 	"time"
 )

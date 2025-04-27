@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"master_service/rest_api/middlewares"
+	"jobs_service/rest_api/middlewares"
 )
 
 type RouteGroup struct {

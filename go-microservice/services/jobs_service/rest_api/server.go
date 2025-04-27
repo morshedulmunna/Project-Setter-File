@@ -2,11 +2,11 @@ package rest_api
 
 import (
 	"fmt"
+	"jobs_service/config"
+	"jobs_service/rest_api/handlers"
+	"jobs_service/rest_api/middlewares"
+	"jobs_service/rest_api/swagger"
 	"log/slog"
-	"master_service/config"
-	"master_service/rest_api/handlers"
-	"master_service/rest_api/middlewares"
-	"master_service/rest_api/swagger"
 	"net/http"
 	"sync"
 

@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"master_service/config"
-	"master_service/rest_api/utils"
+	"jobs_service/config"
+	"jobs_service/rest_api/utils"
 	"net/http"
 )
 

@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"master_service/rest_api/utils"
+	"jobs_service/rest_api/utils"
 )
 
 func (handlers *Handlers) Root(w http.ResponseWriter, r *http.Request) {

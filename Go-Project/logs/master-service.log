@@ -1,0 +1,8 @@
+{"timestamp":"2025-04-27T11:56:42.583577746+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8081 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T11:57:41.357797599+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T12:14:32.630737162+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T12:14:34.46843764+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T12:50:11.468842806+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T12:50:13.237816458+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T12:50:29.175327807+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}
+{"timestamp":"2025-04-27T12:52:13.138668126+06:00","level":"info","caller":"server.go:master_service/rest_api.(*Server).Start.func1:53","message":"Listening at :8080 (API v1)","service":"master-service"}

@@ -1,0 +1,166 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "master service API",
+        "description": "API for retrieving available master service methods with optional filters.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3345",
+            "description": "Local"
+        },
+        {
+            "url": "https://api.yourdomain.com",
+            "description": "Production"
+        }
+    ],
+    "paths": {
+        "/master-service/api/v1/methods": {
+            "get": {
+                "summary": "Get master service Methods",
+                "description": "Retrieves a list of available master service methods with optional filtering by provider type and status.",
+                "parameters": [
+                    {
+                        "name": "providerType",
+                        "in": "query",
+                        "description": "Filter by provider type (e.g., CRYPTO, BANK, MFS).",
+                        "schema": {
+                            "type": "string",
+                            "example": "CRYPTO"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter by status (e.g., ACTIVE, INACTIVE).",
+                        "schema": {
+                            "type": "string",
+                            "example": "ACTIVE"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved master service methods.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "67bcbb4f78999626b121b74c"
+                                                    },
+                                                    "provider_name": {
+                                                        "type": "string",
+                                                        "example": "Test Provider"
+                                                    },
+                                                    "provider_type": {
+                                                        "type": "string",
+                                                        "example": "CRYPTO"
+                                                    },
+                                                    "code_name": {
+                                                        "type": "string",
+                                                        "example": "test"
+                                                    },
+                                                    "icon": {
+                                                        "type": "string",
+                                                        "example": "https://res.cloudinary.com/dcnccdtex/image/upload/v1741111206/pgw/platformmaster serviceMethods/Test%20Provider-test-2025-03-04T18:00:05.084Z.png"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "ACTIVE"
+                                                    },
+                                                    "receiving_channel_number_or_name": {
+                                                        "type": "string",
+                                                        "example": "test"
+                                                    },
+                                                    "exchange_rate": {
+                                                        "type": "number",
+                                                        "example": 130
+                                                    },
+                                                    "auto_confirmation_from_app": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "allow_withdrawal": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-02-24T18:32:47.446Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-03-04T18:00:06.805Z"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request parameters.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid data"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        },
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

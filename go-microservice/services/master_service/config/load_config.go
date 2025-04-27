@@ -30,7 +30,7 @@ func loadConfig() error {
 		HealthCheckRoute: viper.GetString("HEALTH_CHECK_ROUTE"),
 		ApiVersion:       viper.GetString("API_VERSION"),
 		JwtSecret:        viper.GetString("JWT_SECRET"),
-
+		ServiceBasePath:  viper.GetString("SERVICE_BASE_PATH"),
 		// UserDatabase: &UserDatabase{
 		// 	MONGO_URI:                  viper.GetString("MONGO_URI"),
 		// 	Database:             viper.GetString("MONGO_DATABASE"),

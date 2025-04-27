@@ -15,11 +15,15 @@ type RouteGroup struct {
 
 func (server *Server) initRoutes(mux *http.ServeMux, manager *middlewares.Manager) {
 	version := server.cnf.ApiVersion
-	basePath := fmt.Sprintf("/master/api/%s", version)
+	basePath := fmt.Sprintf("%s/%s", server.cnf.ServiceBasePath, version)
 
 	// Define route groups for different versions
 	routeGroups := map[string][]RouteGroup{
 		"v1": {
+			{
+				Path:    "/",
+				Handler: http.HandlerFunc(server.handlers.Root),
+			},
 			{
 				Path:    "/hello",
 				Handler: http.HandlerFunc(server.handlers.Hello),
@@ -37,4 +41,7 @@ func (server *Server) initRoutes(mux *http.ServeMux, manager *middlewares.Manage
 			mux.Handle(fullPath, manager.With(route.Handler, route.Middleware...))
 		}
 	}
+
+	// Add catch-all route for 404s
+	mux.Handle("GET /", manager.With(http.HandlerFunc(server.handlers.NotFound)))
 }

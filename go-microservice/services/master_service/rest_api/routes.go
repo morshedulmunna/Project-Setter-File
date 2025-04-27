@@ -28,6 +28,11 @@ func (server *Server) initRoutes(mux *http.ServeMux, manager *middlewares.Manage
 				Path:    "/hello",
 				Handler: http.HandlerFunc(server.handlers.Hello),
 			},
+			{
+				Path:       "/protected",
+				Handler:    http.HandlerFunc(server.handlers.Protected),
+				Middleware: []middlewares.Middleware{middlewares.AuthMiddleware},
+			},
 		},
 		"v2": {
 			// Add v2 specific routes here

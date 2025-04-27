@@ -41,11 +41,6 @@ func Logger(handler http.Handler) http.Handler {
 
 		handler.ServeHTTP(rec, r)
 
-		// ignore healthcheck route
-		if path == "/master/api/v1/hello" {
-			return
-		}
-
 		cnf := config.GetConfig()
 		if path == cnf.HealthCheckRoute {
 			return

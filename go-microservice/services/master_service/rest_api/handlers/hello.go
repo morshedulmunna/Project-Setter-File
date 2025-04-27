@@ -21,3 +21,14 @@ func (handlers *Handlers) Hello(w http.ResponseWriter, r *http.Request) {
 		"status":  "healthy",
 	})
 }
+
+func (handlers *Handlers) Protected(w http.ResponseWriter, r *http.Request) {
+	// Get the token from context
+	token := r.Context().Value("token").(string)
+
+	utils.SendJson(w, http.StatusOK, map[string]any{
+		"success": true,
+		"message": "This is a protected endpoint",
+		"token":   token,
+	})
+}
